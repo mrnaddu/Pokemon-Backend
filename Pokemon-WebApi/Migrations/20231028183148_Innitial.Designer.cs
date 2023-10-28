@@ -12,7 +12,7 @@ using Pokemon_WebApi.Context;
 namespace Pokemon_WebApi.Migrations
 {
     [DbContext(typeof(PokemonContext))]
-    [Migration("20231028151157_Innitial")]
+    [Migration("20231028183148_Innitial")]
     partial class Innitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,23 +30,8 @@ namespace Pokemon_WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Author")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Editor")
-                        .HasColumnType("text");
-
                     b.Property<double>("Height")
                         .HasColumnType("double precision");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PokemonImage")
                         .HasColumnType("text");

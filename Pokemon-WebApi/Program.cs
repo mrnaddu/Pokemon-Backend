@@ -27,9 +27,7 @@ builder.Services.AddScoped<IPokemonController, PokemonController>();
 
 builder.Services.AddScoped<IPokemonService,PokemonService>();
 
-builder.Services.AddScoped(typeof(IEfCoreRepository<>), typeof(EfCoreRepository<>));
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPokemonRepository,PokemonRepository>();
 
 // Mapping
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

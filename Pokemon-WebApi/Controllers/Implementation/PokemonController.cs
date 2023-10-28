@@ -18,7 +18,7 @@ public class PokemonController : ControllerBase, IPokemonController
 
     [HttpPost]
     public async Task<IActionResult> CreatePokemonAsync(
-        [FromBody] CreatePokemonDto pokemon)
+        [FromForm] CreatePokemonDto pokemon)
     {
         var result = await _service.CreatePokemonAsync(pokemon);
         if (result != null)

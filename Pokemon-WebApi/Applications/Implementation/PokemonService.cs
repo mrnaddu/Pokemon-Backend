@@ -12,17 +12,17 @@ namespace Pokemon_WebApi.Applications.Implementation;
 
 public class PokemonService : IPokemonService
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IPokemonRepository _repository;
     private readonly IMapper _mapper;
     private readonly ILogger<PokemonService> _logger;
     private readonly IFileService _fileService;
     public PokemonService(
-        IUnitOfWork unitOfWork,
+        IPokemonRepository repository,
         IMapper mapper,
         ILogger<PokemonService> logger,
         IFileService fileService)
     {
-        _unitOfWork = unitOfWork;
+        _repository = repository;
         _mapper = mapper;
         _logger = logger;
         _fileService = fileService;
@@ -42,8 +42,7 @@ public class PokemonService : IPokemonService
                     data.PokemonImage = fileResult.Item2; // getting name of image
                 }
             }
-            var result = await _unitOfWork.Repository<Pokemon>().AddAsync(data);
-            await _unitOfWork.SaveAsync();
+            var result = await _repository.CreateAsync(data);
             var img = await _fileService.GetImageAsync(result.PokemonImage);
             var value = _mapper.Map<Pokemon,PokemonDto>(result);
             return new ResponseValue<PokemonDto>
@@ -66,13 +65,8 @@ public class PokemonService : IPokemonService
     {
         try
         {
-            var data = await _unitOfWork.Repository<Pokemon>().Get(id);
-            //var img = _fileService.DeleteImage(data.PokemonImage);
-            if (data != null)
-            {
-                data.IsDeleted = true;
-                await _unitOfWork.SaveAsync();
-            }
+            var data = await _repository.DeleteAsync(id);
+            var img = _fileService.DeleteImage(data.PokemonImage);
             var value = _mapper.Map<Pokemon,PokemonDto>(data);
             return new ResponseValue<PokemonDto>
             {
@@ -93,10 +87,7 @@ public class PokemonService : IPokemonService
     {
         try
         {
-            var data = await _unitOfWork.Repository<Pokemon>()
-                .TableNoTracking
-                .OrderBy(p => p.Id)
-                .ToListAsync();
+            var data = await _repository.GetAllAsync();
             var value = _mapper.Map<List<Pokemon>,List<PokemonDto>>(data);
             return new ResponseValue<List<PokemonDto>>()
             {
@@ -118,7 +109,7 @@ public class PokemonService : IPokemonService
     {
         try
         {
-            var data = await _unitOfWork.Repository<Pokemon>().Get(id);
+            var data = await _repository.GetAsync(id);
             if (data != null)
             {
                 var img = await _fileService.GetImageAsync(data.PokemonImage);
@@ -161,8 +152,7 @@ public class PokemonService : IPokemonService
                     map.PokemonImage = fileResult.Item2; // getting name of image
                 }
             }
-            var data = await _unitOfWork.Repository<Pokemon>().UpdateAsync(id, map);
-            await _unitOfWork.SaveAsync();
+            var data = await _repository.UpdateAsync(id, map);
             var img = await _fileService.GetImageAsync(data.PokemonImage);
             var value = _mapper.Map<Pokemon, PokemonDto>(data);
             return new ResponseValue<PokemonDto>()

@@ -14,7 +14,8 @@ public class FileService : IFileService
         _logger = logger;
     }
 
-    public Tuple<int, string> SaveImage(IFormFile imageFile)
+    public Tuple<int, string> SaveImage(
+        IFormFile imageFile)
     {
         try
         {
@@ -50,7 +51,8 @@ public class FileService : IFileService
         }
     }
 
-    public bool DeleteImage(string imageFileName)
+    public bool DeleteImage(
+        string imageFileName)
     {
         try
         {
@@ -70,7 +72,8 @@ public class FileService : IFileService
         }
     }
 
-    public Task<string> GetImageAsync(string imageFileName)
+    public Task<string> GetImageAsync(
+        string imageFileName)
     {
         string Imageurl = string.Empty;
         try
@@ -90,7 +93,8 @@ public class FileService : IFileService
         }
     }
 
-    public Task<List<string>> GetAllImageAsync(List<string> imageFileName)
+    public Task<List<string>> GetAllImageAsync(
+        List<string> imageFileName)
     {
         List<string> Imageurl = new();
         try
