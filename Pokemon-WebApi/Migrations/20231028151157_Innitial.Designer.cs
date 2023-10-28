@@ -12,7 +12,7 @@ using Pokemon_WebApi.Context;
 namespace Pokemon_WebApi.Migrations
 {
     [DbContext(typeof(PokemonContext))]
-    [Migration("20231028120713_Innitial")]
+    [Migration("20231028151157_Innitial")]
     partial class Innitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

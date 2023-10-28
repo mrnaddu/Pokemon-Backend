@@ -18,7 +18,7 @@ public class PokemonController : ControllerBase, IPokemonController
 
     [HttpPost]
     public async Task<IActionResult> CreatePokemonAsync(
-        [FromForm] CreateUpdatePokemonDto pokemon)
+        [FromForm] CreatePokemonDto pokemon)
     {
         var result = await _service.CreatePokemonAsync(pokemon);
         if (result != null)
@@ -61,7 +61,7 @@ public class PokemonController : ControllerBase, IPokemonController
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdatePokemonAsync(
-        [FromForm] CreateUpdatePokemonDto pokemon,
+        [FromForm] UpdatePokemonDto pokemon,
         Guid id)
     {
         var result = await _service.UpdatePokemonAsync(

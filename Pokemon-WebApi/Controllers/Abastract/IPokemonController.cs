@@ -7,9 +7,9 @@ namespace Pokemon_WebApi.Controllers.Abastract;
 public interface IPokemonController
 {
     Task<IActionResult> CreatePokemonAsync(
-        CreateUpdatePokemonDto pokemon);
+        CreatePokemonDto pokemon);
     Task<IActionResult> UpdatePokemonAsync(
-        CreateUpdatePokemonDto pokemon,
+        UpdatePokemonDto pokemon,
         Guid id);
     Task<IActionResult> DeletePokemonAsync(
         Guid id);

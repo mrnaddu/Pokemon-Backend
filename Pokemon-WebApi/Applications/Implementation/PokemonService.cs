@@ -29,9 +29,9 @@ public class PokemonService : IPokemonService
     }
 
     public async Task<ResponseValue<PokemonDto>> CreatePokemonAsync(
-        CreateUpdatePokemonDto pokemon)
+        CreatePokemonDto pokemon)
     {
-        var data = _mapper.Map<CreateUpdatePokemonDto,Pokemon>(pokemon);
+        var data = _mapper.Map<CreatePokemonDto,Pokemon>(pokemon);
         try
         {
             if(data.ImageFile != null)
@@ -141,9 +141,9 @@ public class PokemonService : IPokemonService
 
     public async Task<ResponseValue<PokemonDto>> UpdatePokemonAsync(
         Guid id,
-        CreateUpdatePokemonDto pokemon)
+        UpdatePokemonDto pokemon)
     {
-        var map = _mapper.Map<CreateUpdatePokemonDto, Pokemon>(pokemon);
+        var map = _mapper.Map<UpdatePokemonDto, Pokemon>(pokemon);
         try
         {
             var data = await _unitOfWork.Repository<Pokemon>().UpdateAsync(id, map);

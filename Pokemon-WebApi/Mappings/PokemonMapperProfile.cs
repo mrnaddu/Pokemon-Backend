@@ -9,6 +9,7 @@ public class PokemonMapperProfile : Profile
     public PokemonMapperProfile()
     {
         CreateMap<Pokemon, PokemonDto>().ReverseMap();
-        CreateMap<Pokemon, CreateUpdatePokemonDto>().ReverseMap();
+        CreateMap<Pokemon, CreatePokemonDto>().ReverseMap();
+        CreateMap<Pokemon, UpdatePokemonDto>().ReverseMap();
     }
 }
