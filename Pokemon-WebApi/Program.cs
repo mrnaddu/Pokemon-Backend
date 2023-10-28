@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Pokemon_WebApi.Applications.Abstract;
+using Pokemon_WebApi.Applications.Implementation;
 using Pokemon_WebApi.Context;
 using Pokemon_WebApi.Controllers.Abastract;
 using Pokemon_WebApi.Controllers.Implementation;
@@ -21,6 +23,8 @@ builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<IPokemonRepository, PokemonRepostory>();
 
 builder.Services.AddTransient<IPokemonController, PokemonController>();
+
+builder.Services.AddTransient<IPokemonService,PokemonService>();
 
 // Mapping
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

@@ -1,7 +1,8 @@
 ﻿namespace Pokemon_WebApi.Models.Response;
 
-public class ResponseValue
+public class ResponseValue<T>
 {
-    public int StatusCode { get; set; }
+    public bool StatusCode { get; set; }
     public string Message { get; set; }
+    public T Value { get; set; }
 }
