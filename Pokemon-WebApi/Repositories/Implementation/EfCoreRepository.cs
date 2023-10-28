@@ -12,11 +12,14 @@ public class EfCoreRepository<T>
 
     private readonly PokemonContext _context;
 
-    protected DbSet<T> _entities;
+    private DbSet<T> _entities;
 
-    public EfCoreRepository(PokemonContext context)
+    public EfCoreRepository(
+        PokemonContext context,
+        DbSet<T> entities)
     {
         _context = context;
+        _entities = entities;
     }
 
     protected string GetFullErrorTextAndRollbackEntityChanges(
@@ -62,9 +65,7 @@ public class EfCoreRepository<T>
     {
         get
         {
-            if (_entities == null)
-                _entities = _context.Set<T>();
-
+            _entities ??= _context.Set<T>();
             return _entities;
         }
     }
