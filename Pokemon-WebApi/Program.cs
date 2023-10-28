@@ -9,9 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// Database Injection
 builder.Services.AddDbContext<PokemonContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Pokemon")));
 
+// Dependency Injection
 builder.Services.AddTransient<IFileService, FileService>();
 
 builder.Services.AddTransient<IPokemonRepository, PokemonRepostory>();
