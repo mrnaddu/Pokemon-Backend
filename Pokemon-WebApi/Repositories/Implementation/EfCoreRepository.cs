@@ -79,9 +79,15 @@ public class EfCoreRepository<T>
     }
     public async Task<T> UpdateAsync(object Id, T entity)
     {
-        T exist = _context.Set<T>().Find(Id);
-        _context.Entry(exist).CurrentValues.SetValues(entity);
-        return entity;
+        var exist = await Entities.FindAsync(Id);
+        if (exist == null)
+            return null;
+        else
+        {
+            _context.Update(exist);
+            _context.SaveChanges();
+            return entity;
+        }
     }
     public async Task<bool> DeleteAsync(object id)
     {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pokemon_WebApi.Models.Dtos;
-using Pokemon_WebApi.Models.Entities;
 
 namespace Pokemon_WebApi.Controllers.Abastract;
 

@@ -102,7 +102,8 @@ public class PokemonService : IPokemonService
             {
                 Message= ErrorMessage.SuccessResponse,
                 StatusCode = true,
-                Value = value
+                Value = value,
+                ImgUrl = null
             };
         }
         catch (Exception ex)
@@ -152,14 +153,24 @@ public class PokemonService : IPokemonService
         var map = _mapper.Map<UpdatePokemonDto, Pokemon>(pokemon);
         try
         {
+            if (map.ImageFile != null)
+            {
+                var fileResult = _fileService.SaveImage(pokemon.ImageFile);
+                if (fileResult != null)
+                {
+                    map.PokemonImage = fileResult.Item2; // getting name of image
+                }
+            }
             var data = await _unitOfWork.Repository<Pokemon>().UpdateAsync(id, map);
-            var value = _mapper.Map<Pokemon, PokemonDto>(data);
             await _unitOfWork.SaveAsync();
+            var img = await _fileService.GetImageAsync(data.PokemonImage);
+            var value = _mapper.Map<Pokemon, PokemonDto>(data);
             return new ResponseValue<PokemonDto>()
             {
                 Message = ErrorMessage.SuccessResponse,
                 StatusCode = true,
-                Value = value
+                Value = value,
+                ImgUrl = img
             };
         }
         catch(Exception ex)
