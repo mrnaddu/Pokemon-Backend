@@ -29,6 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Applications\Abstract\" />
+    <Folder Include="Applications\Implementation\" />
     <Folder Include="Uploads\img\" />
   </ItemGroup>
 
