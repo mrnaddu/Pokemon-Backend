@@ -6,8 +6,9 @@ namespace Pokemon_WebApi.Mapping;
 
 public class PokemonMapperProfile : Profile
 {
-    protected PokemonMapperProfile()
+    public PokemonMapperProfile()
     {
         CreateMap<Pokemon, PokemonDto>().ReverseMap();
+        CreateMap<Pokemon, CreateUpdatePokemonDto>().ReverseMap();
     }
 }

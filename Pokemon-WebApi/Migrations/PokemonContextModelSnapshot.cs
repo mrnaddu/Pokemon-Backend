@@ -37,6 +37,9 @@ namespace Pokemon_WebApi.Migrations
                     b.Property<string>("Editor")
                         .HasColumnType("text");
 
+                    b.Property<double>("Height")
+                        .HasColumnType("double precision");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -49,6 +52,12 @@ namespace Pokemon_WebApi.Migrations
                     b.Property<string>("PokemonName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("PokemonType")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 

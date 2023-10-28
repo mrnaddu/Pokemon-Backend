@@ -31,7 +31,7 @@ public class PokemonService : IPokemonService
     public async Task<ResponseValue<PokemonDto>> CreatePokemonAsync(
         CreateUpdatePokemonDto pokemon)
     {
-        var data = _mapper.Map<Pokemon>(pokemon);
+        var data = _mapper.Map<CreateUpdatePokemonDto,Pokemon>(pokemon);
         try
         {
             if(data.ImageFile != null)
