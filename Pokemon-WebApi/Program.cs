@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Pokemon_WebApi.Context;
+using Pokemon_WebApi.Controllers.Abastract;
+using Pokemon_WebApi.Controllers.Implementation;
 using Pokemon_WebApi.Repository.Abastract;
 using Pokemon_WebApi.Repository.Implementation;
 
@@ -17,6 +19,8 @@ builder.Services.AddDbContext<PokemonContext>(options =>
 builder.Services.AddTransient<IFileService, FileService>();
 
 builder.Services.AddTransient<IPokemonRepository, PokemonRepostory>();
+
+builder.Services.AddTransient<IPokemonController, PokemonController>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
