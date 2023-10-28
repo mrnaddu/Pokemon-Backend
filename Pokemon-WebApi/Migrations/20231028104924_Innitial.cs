@@ -15,7 +15,12 @@ namespace Pokemon_WebApi.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     PokemonName = table.Column<string>(type: "text", nullable: false),
-                    PokemonImage = table.Column<string>(type: "text", nullable: true)
+                    PokemonImage = table.Column<string>(type: "text", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Author = table.Column<string>(type: "text", nullable: true),
+                    Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Editor = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

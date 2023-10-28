@@ -7,7 +7,7 @@ public interface IEfCoreRepository<T> where T : class
 {
     Task<T> AddAsync(T entity);
     void Update(T entity);
-    Task UpdateAsync(object Id, T entity);
+    Task<T> UpdateAsync(object Id, T entity);
     Task<bool> DeleteAsync(object id);
     Task<bool> Delete(T entity);
     Task<bool> Delete(Expression<Func<T, bool>> where);

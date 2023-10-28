@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Pokemon_WebApi.Applications.Abstract;
 using Pokemon_WebApi.Models.Dtos;
 using Pokemon_WebApi.Models.Entities;
@@ -84,21 +85,81 @@ public class PokemonService : IPokemonService
         }
     }
 
-    public Task<ResponseValue<List<PokemonDto>>> GetAllPokemonAsync()
+    public async Task<ResponseValue<List<PokemonDto>>> GetAllPokemonAsync()
     {
-        throw new NotImplementedException();
+        try
+        {
+            var data = await _unitOfWork.Repository<Pokemon>()
+                .TableNoTracking
+                .OrderBy(p => p.Id)
+                .ToListAsync();
+            var value = _mapper.Map<List<Pokemon>,List<PokemonDto>>(data);
+            return new ResponseValue<List<PokemonDto>>()
+            {
+                Message= ErrorMessage.SuccessResponse,
+                StatusCode = true,
+                Value = value
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return null;
+        }
     }
 
-    public Task<ResponseValue<PokemonDto>> GetByIdPokemonAsync(
+    public async Task<ResponseValue<PokemonDto>> GetByIdPokemonAsync(
         Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var data = await _unitOfWork.Repository<Pokemon>().Get(id);
+            if (data != null)
+            {
+                var value = _mapper.Map<Pokemon,PokemonDto>(data);
+                return new ResponseValue<PokemonDto>()
+                {
+                    Value = value,
+                    StatusCode = true,
+                    Message = ErrorMessage.SuccessResponse
+                };
+            }
+            else
+                return new ResponseValue<PokemonDto>()
+                {
+                    Value = null,
+                    StatusCode = false,
+                    Message = ErrorMessage.InternalServerError
+                };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return null;
+        }
     }
 
-    public Task<ResponseValue<PokemonDto>> UpdatePokemonAsync(
+    public async Task<ResponseValue<PokemonDto>> UpdatePokemonAsync(
         Guid id,
         CreateUpdatePokemonDto pokemon)
     {
-        throw new NotImplementedException();
+        var map = _mapper.Map<CreateUpdatePokemonDto, Pokemon>(pokemon);
+        try
+        {
+            var data = await _unitOfWork.Repository<Pokemon>().UpdateAsync(id, map);
+            var value = _mapper.Map<Pokemon, PokemonDto>(data);
+            await _unitOfWork.SaveAsync();
+            return new ResponseValue<PokemonDto>()
+            {
+                Message = ErrorMessage.SuccessResponse,
+                StatusCode = true,
+                Value = value
+            };
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex.Message);
+            return null;
+        }
     }
 }

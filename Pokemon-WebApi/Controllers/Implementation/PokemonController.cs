@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pokemon_WebApi.Applications.Abstract;
 using Pokemon_WebApi.Controllers.Abastract;
-using Pokemon_WebApi.Models.Entities;
-using Pokemon_WebApi.Models.Response;
-using Pokemon_WebApi.Repository.Abastract;
+using Pokemon_WebApi.Models.Dtos;
 
 namespace Pokemon_WebApi.Controllers.Implementation;
 
@@ -10,45 +9,67 @@ namespace Pokemon_WebApi.Controllers.Implementation;
 [ApiController]
 public class PokemonController : ControllerBase, IPokemonController
 {
-    private readonly IFileService _fileService;
-    private readonly IPokemonRepository _pokemonRepo;
+    private readonly IPokemonService _service;
     public PokemonController(
-        IFileService fileService,
-        IPokemonRepository pokemonRepo)
+        IPokemonService service)
     {
-        _fileService = fileService;
-        _pokemonRepo = pokemonRepo; 
+        _service = service;
     }
 
     [HttpPost]
-    public IActionResult Add([FromForm] Pokemon pokemon)
+    public async Task<IActionResult> CreatePokemonAsync(
+        [FromForm] CreateUpdatePokemonDto pokemon)
     {
-        var response = new ResponseValue();
-        if (!ModelState.IsValid)
-        {
-            response.StatusCode = 0;
-            response.Message = "Please pass the valid data";
-            return Ok(response);
-        }
-        if (pokemon.ImageFile != null)
-        {
-            var fileResult = _fileService.SaveImage(pokemon.ImageFile);
-            if (fileResult.Item1 == 1)
-            {
-                pokemon.PokemonImage = fileResult.Item2; // getting name of image
-            }
-            var productResult = _pokemonRepo.Add(pokemon);
-            if (productResult)
-            {
-                response.StatusCode = 1;
-                response.Message = "Added successfully";
-            }
-            else
-            {
-                response.StatusCode = 0;
-                response.Message = "Error on adding product";
-            }
-        }
-        return Ok(response);
+        var result = await _service.CreatePokemonAsync(pokemon);
+        if (result != null)
+            return Ok(result);
+
+        else return BadRequest();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePokemonAsync(
+        Guid id)
+    {
+        var result = await _service.DeletePokemonAsync(id);
+        if (result != null)
+            return Ok(result);
+
+        else return BadRequest();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllPokemonAsync()
+    {
+        var result = await _service.GetAllPokemonAsync();
+        if (result != null)
+            return Ok(result);
+
+        else return BadRequest();
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPokemonByIdAsync(
+        Guid id)
+    {
+        var result = await _service.GetByIdPokemonAsync(id);
+        if (result != null)
+            return Ok(result);
+
+        else return BadRequest();
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdatePokemonAsync(
+        [FromForm] CreateUpdatePokemonDto pokemon,
+        Guid id)
+    {
+        var result = await _service.UpdatePokemonAsync(
+            id,
+            pokemon);
+        if (result != null)
+            return Ok(result);
+
+        else return BadRequest();
     }
 }

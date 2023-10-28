@@ -77,11 +77,11 @@ public class EfCoreRepository<T>
     {
         _context.Entry(entity).State = EntityState.Modified;
     }
-    public Task UpdateAsync(object Id, T entity)
+    public async Task<T> UpdateAsync(object Id, T entity)
     {
         T exist = _context.Set<T>().Find(Id);
         _context.Entry(exist).CurrentValues.SetValues(entity);
-        return Task.CompletedTask;
+        return entity;
     }
     public async Task<bool> DeleteAsync(object id)
     {
