@@ -1333,11 +1333,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\Desktop\\Pokemon\\Pokemon-Backend\\Pokemon-WebApi\\Pokemon-WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\New folder\\Pokemon-Backend\\Pokemon-WebApi\\Pokemon-WebApi.csproj",
       "projectName": "Pokemon-WebApi",
-      "projectPath": "C:\\Users\\user\\Desktop\\Pokemon\\Pokemon-Backend\\Pokemon-WebApi\\Pokemon-WebApi.csproj",
+      "projectPath": "C:\\Users\\user\\Desktop\\New folder\\Pokemon-Backend\\Pokemon-WebApi\\Pokemon-WebApi.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Desktop\\Pokemon\\Pokemon-Backend\\Pokemon-WebApi\\obj\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\New folder\\Pokemon-Backend\\Pokemon-WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
