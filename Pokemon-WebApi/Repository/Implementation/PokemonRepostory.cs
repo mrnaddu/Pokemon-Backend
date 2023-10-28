@@ -7,9 +7,13 @@ namespace Pokemon_WebApi.Repository.Implementation;
 public class PokemonRepostory : IPokemonRepository
 {
     private readonly PokemonContext _context;
-    public PokemonRepostory(PokemonContext context)
+    private readonly ILogger<PokemonRepostory> _logger;
+    public PokemonRepostory(
+        PokemonContext context,
+        ILogger<PokemonRepostory> logger)
     {
-        this._context = context;
+        _context = context;
+        _logger = logger;
     }
     public bool Add(Pokemon model)
     {
@@ -21,7 +25,7 @@ public class PokemonRepostory : IPokemonRepository
         }
         catch (Exception ex)
         {
-
+            _logger.LogError("There is problem while saving POKEMON ", ex);
             return false;
         }
     }

@@ -1,15 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Pokemon_WebApi.Models.Common;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Pokemon_WebApi.Models.Entities;
 
-public class Pokemon
+public class Pokemon : Entity
 {
-    [Key]
-    public Guid Id { get; set; }
     [Required]
-
     [AllowNull]
     public string PokemonName { get; set; }
 
@@ -19,4 +17,16 @@ public class Pokemon
     [NotMapped]
     [AllowNull]
     public IFormFile ImageFile { get; set; }
+
+    protected Pokemon()
+    {
+
+    }
+    public Pokemon(
+        Guid id,
+        string pokemonName) 
+        : base(id)
+    {
+        PokemonName = pokemonName;
+    }
 }

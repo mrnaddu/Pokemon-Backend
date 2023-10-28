@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pokemon_WebApi.Controllers.Abastract;
-using Pokemon_WebApi.Models.Dtos;
 using Pokemon_WebApi.Models.Entities;
+using Pokemon_WebApi.Models.Response;
 using Pokemon_WebApi.Repository.Abastract;
 
 namespace Pokemon_WebApi.Controllers.Implementation;
@@ -23,7 +23,7 @@ public class PokemonController : ControllerBase, IPokemonController
     [HttpPost]
     public IActionResult Add([FromForm] Pokemon pokemon)
     {
-        var response = new ResponseDto();
+        var response = new ResponseValue();
         if (!ModelState.IsValid)
         {
             response.StatusCode = 0;

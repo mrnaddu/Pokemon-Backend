@@ -4,11 +4,11 @@ using Pokemon_WebApi.Controllers.Abastract;
 using Pokemon_WebApi.Controllers.Implementation;
 using Pokemon_WebApi.Repository.Abastract;
 using Pokemon_WebApi.Repository.Implementation;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 // Database Injection
@@ -21,6 +21,9 @@ builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<IPokemonRepository, PokemonRepostory>();
 
 builder.Services.AddTransient<IPokemonController, PokemonController>();
+
+// Mapping
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -76,3 +76,6 @@ C:\Users\user\Desktop\New folder\Pokemon-Backend\Pokemon-WebApi\obj\Debug\net6.0
 C:\Users\user\Desktop\New folder\Pokemon-Backend\Pokemon-WebApi\obj\Debug\net6.0\Pokemon-WebApi.pdb
 C:\Users\user\Desktop\New folder\Pokemon-Backend\Pokemon-WebApi\obj\Debug\net6.0\Pokemon-WebApi.genruntimeconfig.cache
 C:\Users\user\Desktop\New folder\Pokemon-Backend\Pokemon-WebApi\obj\Debug\net6.0\ref\Pokemon-WebApi.dll
+C:\Users\user\Desktop\New folder\Pokemon-Backend\Pokemon-WebApi\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\user\Desktop\New folder\Pokemon-Backend\Pokemon-WebApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\user\Desktop\New folder\Pokemon-Backend\Pokemon-WebApi\bin\Debug\net6.0\Newtonsoft.Json.dll
