@@ -2,7 +2,7 @@
 
 namespace Pokemon_WebApi.Models.Dtos;
 
-public class PokemonDto : EntityDto
+public class PokemonDto
 {
     public string PokemonName { get; set; }
     public string PokemonImage { get; set; }

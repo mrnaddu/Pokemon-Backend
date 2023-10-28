@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Pokemon_WebApi.Models.Entities;
 
-public class Pokemon : Entity
+public class Pokemon : AuditableWithBaseEntity<Guid>
 {
     [Required]
     [AllowNull]
@@ -17,16 +17,4 @@ public class Pokemon : Entity
     [NotMapped]
     [AllowNull]
     public IFormFile ImageFile { get; set; }
-
-    protected Pokemon()
-    {
-
-    }
-    public Pokemon(
-        Guid id,
-        string pokemonName) 
-        : base(id)
-    {
-        PokemonName = pokemonName;
-    }
 }
