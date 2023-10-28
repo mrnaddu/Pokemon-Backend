@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Pokemon_WebApi.Applications.Abstract;
 using Pokemon_WebApi.Models.Dtos;
 using Pokemon_WebApi.Models.Entities;
@@ -42,16 +41,32 @@ public class PokemonService : IPokemonService
                     data.PokemonImage = fileResult.Item2; // getting name of image
                 }
             }
-            var result = await _repository.CreateAsync(data);
-            var img = await _fileService.GetImageAsync(result.PokemonImage);
-            var value = _mapper.Map<Pokemon,PokemonDto>(result);
-            return new ResponseValue<PokemonDto>
+            var name = await _repository.FindByNameAsync(data.PokemonName);
+            if(name == null) 
             {
-                Message = ErrorMessage.SuccessResponse,
-                StatusCode = true,
-                Value = value,
-                ImgUrl = img
-            };
+                var result = await _repository.CreateAsync(data);
+                var img = await _fileService.GetImageAsync(result.PokemonImage);
+                var value = _mapper.Map<Pokemon, PokemonDto>(result);
+                return new ResponseValue<PokemonDto>
+                {
+                    Message = ErrorMessage.SuccessResponse,
+                    StatusCode = true,
+                    Value = value,
+                    ImgUrl = img
+                };
+            }
+            else
+            {
+                return new ResponseValue<PokemonDto>
+                {
+                    Message = ErrorMessage.NameError,
+                    StatusCode = false,
+                    Value = null,
+                    ImgUrl = null
+                    
+                };
+            }
+            
         }
         catch (Exception ex)
         {

@@ -34,6 +34,17 @@ public class PokemonRepository : IPokemonRepository
         return data;
     }
 
+    public async Task<Pokemon> FindByNameAsync(
+        string pokemonName)
+    {
+        var data = _context.Pokemons.AsQueryable();
+        var result =
+            await data.AsNoTracking()
+            .FirstOrDefaultAsync(
+                x=> x.PokemonName == pokemonName);
+        return result;
+    }
+
     public async Task<List<Pokemon>> GetAllAsync()
     {
         var data =  _context.Pokemons.AsQueryable();

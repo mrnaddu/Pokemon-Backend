@@ -14,4 +14,6 @@ public interface IPokemonRepository
     Task<Pokemon> CreateAsync(
         Pokemon pokemon);
     Task<List<Pokemon>> GetAllAsync();
+    Task<Pokemon> FindByNameAsync(
+        string pokemonName);
 }
