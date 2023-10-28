@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Pokemon_WebApi.Applications.Abstract;
 using Pokemon_WebApi.Applications.Implementation;
 using Pokemon_WebApi.Context;
@@ -47,6 +48,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+           Path.Combine(builder.Environment.ContentRootPath, "Uploads/img")),
+    RequestPath = "/Resources"
+});
 
 app.UseAuthorization();
 

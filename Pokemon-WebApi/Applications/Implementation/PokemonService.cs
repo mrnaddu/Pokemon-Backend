@@ -44,12 +44,14 @@ public class PokemonService : IPokemonService
             }
             var result = await _unitOfWork.Repository<Pokemon>().AddAsync(data);
             await _unitOfWork.SaveAsync();
+            var img = await _fileService.GetImageAsync(result.PokemonImage);
             var value = _mapper.Map<Pokemon,PokemonDto>(result);
             return new ResponseValue<PokemonDto>
             {
                 Message = ErrorMessage.SuccessResponse,
                 StatusCode = true,
-                Value = value
+                Value = value,
+                ImgUrl = img
             };
         }
         catch (Exception ex)
@@ -65,6 +67,7 @@ public class PokemonService : IPokemonService
         try
         {
             var data = await _unitOfWork.Repository<Pokemon>().Get(id);
+            //var img = _fileService.DeleteImage(data.PokemonImage);
             if (data != null)
             {
                 data.IsDeleted = true;
@@ -75,7 +78,8 @@ public class PokemonService : IPokemonService
             {
                 Message = ErrorMessage.SuccessResponse,
                 StatusCode = true,
-                Value = value
+                Value = value,
+                ImgUrl = null
             };
         }
         catch (Exception ex)
@@ -116,12 +120,14 @@ public class PokemonService : IPokemonService
             var data = await _unitOfWork.Repository<Pokemon>().Get(id);
             if (data != null)
             {
+                var img = await _fileService.GetImageAsync(data.PokemonImage);
                 var value = _mapper.Map<Pokemon,PokemonDto>(data);
                 return new ResponseValue<PokemonDto>()
                 {
                     Value = value,
                     StatusCode = true,
-                    Message = ErrorMessage.SuccessResponse
+                    Message = ErrorMessage.SuccessResponse,
+                    ImgUrl = img
                 };
             }
             else
