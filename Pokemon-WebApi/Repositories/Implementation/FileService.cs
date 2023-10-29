@@ -93,36 +93,4 @@ public class FileService
             return null;
         }
     }
-
-    public Task<List<string>> GetAllImageAsync(
-        List<string> imageFileName)
-    {
-        List<string> Imageurl = new();
-        try
-        {
-            var contentPath = _environment.ContentRootPath;
-            var path = Path.Combine(contentPath, "Uploads/img");
-            if (Directory.Exists(path))
-            {
-                DirectoryInfo directoryInfo = new(path);
-                FileInfo[] fileInfos = directoryInfo.GetFiles();
-                foreach (FileInfo fileInfo in fileInfos)
-                {
-                    string filename = fileInfo.Name;
-                    string imagepath = path + "\\" + filename;
-                    if (Directory.Exists(imagepath))
-                    {
-                        string _Imageurl = "https://localhost:7000/Resources/" + imageFileName;
-                        Imageurl.Add(_Imageurl);
-                    }
-                }
-            }
-            return Task.FromResult(Imageurl);
-        }
-        catch(Exception ex)
-        {
-            _logger.LogError(ex.Message);
-            return null;
-        }
-    }
 }

@@ -8,6 +8,4 @@ public interface IFileService
         string imageFileName);
     Task<string> GetImageAsync(
         string imageFileName);
-    Task<List<string>> GetAllImageAsync(
-        List<string> imageFileName);
 }

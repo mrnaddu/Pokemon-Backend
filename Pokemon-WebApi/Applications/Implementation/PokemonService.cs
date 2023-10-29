@@ -2,7 +2,7 @@
 using Pokemon_WebApi.Applications.Abstract;
 using Pokemon_WebApi.Models.Dtos;
 using Pokemon_WebApi.Models.Entities;
-using Pokemon_WebApi.Models.Error;
+using Pokemon_WebApi.Models.Messages;
 using Pokemon_WebApi.Models.Response;
 using Pokemon_WebApi.Repositories.Abastract;
 using Pokemon_WebApi.Repository.Abastract;
@@ -39,18 +39,20 @@ public class PokemonService
                 var fileResult = _fileService.SaveImage(pokemon.ImageFile);
                 if(fileResult != null)
                 {
-                    data.PokemonImage = fileResult.Item2; // getting name of image
+                    data.PokemonImage = fileResult.Item2; // Getting name of image
                 }
             }
-            var name = await _repository.FindByNameAsync(data.PokemonName);
+            var name = await _repository.FindByNameAsync(
+                data.PokemonName);// Check the Name
             if(name == null) 
             {
-                data.PokemonImageUrl = await _fileService.GetImageAsync(data.PokemonImage);
+                data.PokemonImageUrl = await _fileService.GetImageAsync(
+                    data.PokemonImage); // // Getting ImageUrl
                 var result = await _repository.CreateAsync(data);
                 var value = _mapper.Map<Pokemon, PokemonDto>(result);
                 return new ResponseValue<PokemonDto>
                 {
-                    Message = ErrorMessage.SuccessResponse,
+                    Message = ResponseMessage.SuccessfullyInserted,
                     StatusCode = true,
                     Value = value
                 };
@@ -59,12 +61,11 @@ public class PokemonService
             {
                 return new ResponseValue<PokemonDto>
                 {
-                    Message = ErrorMessage.NameError,
+                    Message = ResponseMessage.NameError,
                     StatusCode = false,
                     Value = null                
                 };
-            }
-            
+            }      
         }
         catch (Exception ex)
         {
@@ -79,11 +80,11 @@ public class PokemonService
         try
         {
             var data = await _repository.DeleteAsync(id);
-            var img = _fileService.DeleteImage(data.PokemonImage);
+            _fileService.DeleteImage(data.PokemonImage); // Delete Image
             var value = _mapper.Map<Pokemon,PokemonDto>(data);
             return new ResponseValue<PokemonDto>
             {
-                Message = ErrorMessage.SuccessResponse,
+                Message = ResponseMessage.SuccessfullyDeleted,
                 StatusCode = true,
                 Value = value
             };
@@ -105,12 +106,13 @@ public class PokemonService
             {
                 value.ForEach(async x =>
                 {
-                    x.PokemonImageUrl =  await _fileService.GetImageAsync(x.PokemonImage);
+                    x.PokemonImageUrl =  
+                    await _fileService.GetImageAsync(x.PokemonImage); // Getting ImageUrl
                 });
             }
             return new ResponseValue<List<PokemonDto>>()
             {
-                Message= ErrorMessage.SuccessResponse,
+                Message= ResponseMessage.FoundAllData,
                 StatusCode = true,
                 Value = value
             };
@@ -130,13 +132,12 @@ public class PokemonService
             var data = await _repository.GetAsync(id);
             if (data != null)
             {
-                var img = await _fileService.GetImageAsync(data.PokemonImage);
                 var value = _mapper.Map<Pokemon,PokemonDto>(data);
                 return new ResponseValue<PokemonDto>()
                 {
                     Value = value,
                     StatusCode = true,
-                    Message = ErrorMessage.SuccessResponse
+                    Message = ResponseMessage.FoundTheData
                 };
             }
             else
@@ -144,7 +145,7 @@ public class PokemonService
                 {
                     Value = null,
                     StatusCode = false,
-                    Message = ErrorMessage.InternalServerError
+                    Message = ResponseMessage.CouldNotFoundTheData
                 };
         }
         catch (Exception ex)
@@ -166,15 +167,16 @@ public class PokemonService
                 var fileResult = _fileService.SaveImage(pokemon.ImageFile);
                 if (fileResult != null)
                 {
-                    map.PokemonImage = fileResult.Item2; // getting name of image
+                    map.PokemonImage = fileResult.Item2; // Getting name of image
                 }
             }
+            map.PokemonImageUrl = await _fileService.GetImageAsync(
+                    map.PokemonImage); // Getting ImageUrl
             var data = await _repository.UpdateAsync(id, map);
-            var img = await _fileService.GetImageAsync(data.PokemonImage);
             var value = _mapper.Map<Pokemon, PokemonDto>(data);
             return new ResponseValue<PokemonDto>()
             {
-                Message = ErrorMessage.SuccessResponse,
+                Message = ResponseMessage.SuccessfullyUpdated,
                 StatusCode = true,
                 Value = value
             };

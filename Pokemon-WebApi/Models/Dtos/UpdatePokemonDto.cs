@@ -16,8 +16,6 @@ public class UpdatePokemonDto
     public double Height { get; set; }
     [Required]
     public double Weight { get; set; }
-    [AllowNull]
-    public IFormFile ImageFile { get; set; }
     [Required]
     public string Category { get; set; }
     [Required]
@@ -26,4 +24,6 @@ public class UpdatePokemonDto
     public string Abilities { get; set; }
     [Required]
     public string Stats { get; set; }
+    [AllowNull]
+    public IFormFile ImageFile { get; set; }
 }
