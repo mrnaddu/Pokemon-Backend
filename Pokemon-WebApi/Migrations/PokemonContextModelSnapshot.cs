@@ -31,6 +31,9 @@ namespace Pokemon_WebApi.Migrations
                     b.Property<double>("Height")
                         .HasColumnType("double precision");
 
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("PokemonImage")
                         .HasColumnType("text");
 

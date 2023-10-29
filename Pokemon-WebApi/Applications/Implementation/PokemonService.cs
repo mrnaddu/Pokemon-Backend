@@ -9,7 +9,8 @@ using Pokemon_WebApi.Repository.Abastract;
 
 namespace Pokemon_WebApi.Applications.Implementation;
 
-public class PokemonService : IPokemonService
+public class PokemonService 
+    : IPokemonService
 {
     private readonly IPokemonRepository _repository;
     private readonly IMapper _mapper;

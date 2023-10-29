@@ -2,7 +2,8 @@
 
 namespace Pokemon_WebApi.Repository.Implementation;
 
-public class FileService : IFileService
+public class FileService 
+    : IFileService
 {
     private readonly IWebHostEnvironment _environment;
     private readonly ILogger<FileService> _logger;
@@ -82,7 +83,7 @@ public class FileService : IFileService
             var path = Path.Combine(contentPath, "Uploads/img");
             if (Directory.Exists(path))
             {
-                Imageurl = "https://localhost:7014/Resources/"+ imageFileName;
+                Imageurl = "https://localhost:7000/Resources/"+ imageFileName;
             }
             return Task.FromResult(Imageurl);
         }
@@ -111,7 +112,7 @@ public class FileService : IFileService
                     string imagepath = path + "\\" + filename;
                     if (Directory.Exists(imagepath))
                     {
-                        string _Imageurl = "https://localhost:7014/Resources/" + imageFileName;
+                        string _Imageurl = "https://localhost:7000/Resources/" + imageFileName;
                         Imageurl.Add(_Imageurl);
                     }
                 }

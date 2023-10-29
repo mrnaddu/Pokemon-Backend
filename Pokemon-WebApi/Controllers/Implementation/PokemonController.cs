@@ -7,7 +7,8 @@ namespace Pokemon_WebApi.Controllers.Implementation;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PokemonController : ControllerBase, IPokemonController
+public class PokemonController 
+    : ControllerBase, IPokemonController
 {
     private readonly IPokemonService _service;
     public PokemonController(

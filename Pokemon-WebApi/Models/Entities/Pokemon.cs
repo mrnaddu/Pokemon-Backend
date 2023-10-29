@@ -10,7 +10,7 @@ public class Pokemon : Entity
 {
     [Required]
     [AllowNull]
-    public string PokemonName { get; set; }
+    public string PokemonName { get; set; } = string.Empty;
 
     [AllowNull]
     public string PokemonImage { get; set; }
@@ -19,9 +19,11 @@ public class Pokemon : Entity
     public PokemonTypes PokemonType { get; set; }
 
     [Required]
-    public double Height { get; set; }
+    public double Height { get; set; } = 10.00;
     [Required]
-    public double Weight { get; set; }
+    public double Weight { get; set; } = 10.00;
+
+    public bool IsDelete { get; set; } = false;
 
     [NotMapped]
     [AllowNull]

@@ -5,7 +5,8 @@ using Pokemon_WebApi.Repositories.Abastract;
 
 namespace Pokemon_WebApi.Repositories.Implementation;
 
-public class PokemonRepository : IPokemonRepository
+public class PokemonRepository 
+    : IPokemonRepository
 {
     private readonly PokemonContext _context;
     public PokemonRepository(
@@ -28,8 +29,9 @@ public class PokemonRepository : IPokemonRepository
         var data = await GetAsync(id);
         if(data != null)
         {
-            _context.Pokemons.Remove(data);
-            _context.SaveChanges();
+            data.IsDelete = true;
+            _context.Pokemons.Update(data);  
+            await _context.SaveChangesAsync();
         }
         return data;
     }
@@ -40,6 +42,8 @@ public class PokemonRepository : IPokemonRepository
         var data = _context.Pokemons.AsQueryable();
         var result =
             await data.AsNoTracking()
+            .Where(
+                x => x.IsDelete == false)
             .FirstOrDefaultAsync(
                 x=> x.PokemonName == pokemonName);
         return result;
@@ -50,7 +54,10 @@ public class PokemonRepository : IPokemonRepository
         var data =  _context.Pokemons.AsQueryable();
         var result = 
             await data.AsNoTracking()
-            .OrderBy(x => x.Id)
+            .Where(
+                x=> x.IsDelete == false)
+            .OrderBy(
+                x => x.Id)
             .ToListAsync();
         return result;
     }
@@ -61,6 +68,7 @@ public class PokemonRepository : IPokemonRepository
         var data =  _context.Pokemons.AsQueryable();
         var result = 
             await data.AsNoTracking()
+            .Where(x=> x.IsDelete == false)
             .FirstOrDefaultAsync(x=> x.Id == id);
         return result;
     }

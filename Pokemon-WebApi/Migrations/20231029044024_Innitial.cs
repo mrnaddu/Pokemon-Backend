@@ -18,7 +18,8 @@ namespace Pokemon_WebApi.Migrations
                     PokemonImage = table.Column<string>(type: "text", nullable: true),
                     PokemonType = table.Column<int>(type: "integer", nullable: false),
                     Height = table.Column<double>(type: "double precision", nullable: false),
-                    Weight = table.Column<double>(type: "double precision", nullable: false)
+                    Weight = table.Column<double>(type: "double precision", nullable: false),
+                    IsDelete = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

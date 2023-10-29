@@ -12,7 +12,7 @@ using Pokemon_WebApi.Context;
 namespace Pokemon_WebApi.Migrations
 {
     [DbContext(typeof(PokemonContext))]
-    [Migration("20231028183148_Innitial")]
+    [Migration("20231029044024_Innitial")]
     partial class Innitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace Pokemon_WebApi.Migrations
 
                     b.Property<double>("Height")
                         .HasColumnType("double precision");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("PokemonImage")
                         .HasColumnType("text");
