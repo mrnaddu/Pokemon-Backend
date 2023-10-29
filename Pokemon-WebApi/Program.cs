@@ -9,6 +9,7 @@ using Pokemon_WebApi.Repositories.Abastract;
 using Pokemon_WebApi.Repositories.Implementation;
 using Pokemon_WebApi.Repository.Abastract;
 using Pokemon_WebApi.Repository.Implementation;
+using Serilog;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +35,23 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyOrigin();
+        policy.WithMethods("GET", "POST", "DELETE", "PUT");
+        policy.WithOrigins("http://localhost:4200");
+    });
+});
+
+// Serilog 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
@@ -47,12 +64,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Static files config for image link
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
            Path.Combine(builder.Environment.ContentRootPath, "Uploads/img")),
     RequestPath = "/Resources"
 });
+
+app.UseCors();
+
+app.UseSerilogRequestLogging();
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
