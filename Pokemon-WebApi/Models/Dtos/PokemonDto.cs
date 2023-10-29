@@ -1,4 +1,5 @@
 ﻿using Pokemon_WebApi.Models.Enums;
+using System.Text.Json;
 
 namespace Pokemon_WebApi.Models.Dtos;
 
@@ -17,5 +18,5 @@ public class PokemonDto
     public string Abilities { get; set; }
     public double Height { get; set; }
     public double Weight { get; set; }
-    public string Stats { get; set; }
+    public JsonElement Stats { get; set; }
 }
