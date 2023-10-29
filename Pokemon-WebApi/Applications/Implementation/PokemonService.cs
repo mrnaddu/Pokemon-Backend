@@ -45,15 +45,14 @@ public class PokemonService
             var name = await _repository.FindByNameAsync(data.PokemonName);
             if(name == null) 
             {
+                data.PokemonImageUrl = await _fileService.GetImageAsync(data.PokemonImage);
                 var result = await _repository.CreateAsync(data);
-                var img = await _fileService.GetImageAsync(result.PokemonImage);
                 var value = _mapper.Map<Pokemon, PokemonDto>(result);
                 return new ResponseValue<PokemonDto>
                 {
                     Message = ErrorMessage.SuccessResponse,
                     StatusCode = true,
-                    Value = value,
-                    ImgUrl = img
+                    Value = value
                 };
             }
             else
@@ -62,9 +61,7 @@ public class PokemonService
                 {
                     Message = ErrorMessage.NameError,
                     StatusCode = false,
-                    Value = null,
-                    ImgUrl = null
-                    
+                    Value = null                
                 };
             }
             
@@ -88,8 +85,7 @@ public class PokemonService
             {
                 Message = ErrorMessage.SuccessResponse,
                 StatusCode = true,
-                Value = value,
-                ImgUrl = null
+                Value = value
             };
         }
         catch (Exception ex)
@@ -105,12 +101,18 @@ public class PokemonService
         {
             var data = await _repository.GetAllAsync();
             var value = _mapper.Map<List<Pokemon>,List<PokemonDto>>(data);
+            if(value != null && value.Count > 0)
+            {
+                value.ForEach(async x =>
+                {
+                    x.PokemonImageUrl =  await _fileService.GetImageAsync(x.PokemonImage);
+                });
+            }
             return new ResponseValue<List<PokemonDto>>()
             {
                 Message= ErrorMessage.SuccessResponse,
                 StatusCode = true,
-                Value = value,
-                ImgUrl = null
+                Value = value
             };
         }
         catch (Exception ex)
@@ -134,8 +136,7 @@ public class PokemonService
                 {
                     Value = value,
                     StatusCode = true,
-                    Message = ErrorMessage.SuccessResponse,
-                    ImgUrl = img
+                    Message = ErrorMessage.SuccessResponse
                 };
             }
             else
@@ -175,8 +176,7 @@ public class PokemonService
             {
                 Message = ErrorMessage.SuccessResponse,
                 StatusCode = true,
-                Value = value,
-                ImgUrl = img
+                Value = value
             };
         }
         catch(Exception ex)

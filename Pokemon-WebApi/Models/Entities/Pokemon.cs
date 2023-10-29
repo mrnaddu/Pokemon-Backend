@@ -11,6 +11,7 @@ public class Pokemon : Entity
     [Required]
     public string PokemonName { get; set; } = string.Empty;
     public string PokemonImage { get; set; } = string.Empty;
+    public string PokemonImageUrl { get; set; } = string.Empty;
     [Required]
     public PokemonTypes PokemonType { get; set; }
     [Required]

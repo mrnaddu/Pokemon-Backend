@@ -7,6 +7,7 @@ public class PokemonDto
     public Guid Id { get; set; }
     public string PokemonName { get; set; }
     public string PokemonImage { get; set; }
+    public string PokemonImageUrl { get; set; }
     public PokemonTypes PokemonType { get; set; }
     public PokemonGenders PokemonGender { get; set; }
     public bool IsDelete { get; set; }
