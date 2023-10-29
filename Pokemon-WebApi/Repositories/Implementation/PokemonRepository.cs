@@ -19,6 +19,7 @@ public class PokemonRepository
         Pokemon pokemon)
     {
         var data = await _context.Pokemons.AddAsync(pokemon);
+        data.Entity.IsActive = true;
         await _context.SaveChangesAsync();  
         return data.Entity;
     }
@@ -42,8 +43,6 @@ public class PokemonRepository
         var data = _context.Pokemons.AsQueryable();
         var result =
             await data.AsNoTracking()
-            .Where(
-                x => x.IsDelete == false)
             .FirstOrDefaultAsync(
                 x=> x.PokemonName == pokemonName);
         return result;
@@ -55,7 +54,8 @@ public class PokemonRepository
         var result = 
             await data.AsNoTracking()
             .Where(
-                x=> x.IsDelete == false)
+                x=> x.IsDelete == false 
+                && x.IsActive == true)
             .OrderBy(
                 x => x.Id)
             .ToListAsync();
@@ -68,7 +68,9 @@ public class PokemonRepository
         var data =  _context.Pokemons.AsQueryable();
         var result = 
             await data.AsNoTracking()
-            .Where(x=> x.IsDelete == false)
+            .Where(
+                x=> x.IsDelete == false
+                && x.IsActive == true)
             .FirstOrDefaultAsync(x=> x.Id == id);
         return result;
     }
